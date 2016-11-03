@@ -11,6 +11,8 @@ class BitmapEditor
           show_help
         when /\s*I\s+\d+\s+\d+\s*\z/
           init_new_image(input)
+        when /\s*C\s*\z/
+          clean_image
         when /\s*S\s*\z/
           show
         when /\s*X\s*\z/
@@ -26,7 +28,14 @@ class BitmapEditor
       params = input.split(' ')
       @width, @height = params[1].to_i, params[2].to_i
       @image = []
-      @height.times.each {|time| @image << 'O'*@width}
+      clean_image
+    end
+
+    def clean_image
+      if @image
+        @image = []
+        @height.times.each {|time| @image << 'O'*@width}
+      end
     end
 
     def show
