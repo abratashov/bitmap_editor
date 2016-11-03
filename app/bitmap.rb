@@ -1,9 +1,16 @@
 class Bitmap
+  IMAGE_RESTRICTION = 10000
+
   def init_new_image(input)
     params = input.split(' ')
-    @width, @height = params[1].to_i, params[2].to_i
-    @image = []
-    clean_image
+    width, height = params[1].to_i, params[2].to_i
+    if width > IMAGE_RESTRICTION || height > IMAGE_RESTRICTION
+      message("width or height can't be more than #{IMAGE_RESTRICTION}")
+    else
+      @width, @height = width, height
+      @image = []
+      clean_image
+    end
   end
 
   def clean_image
@@ -39,7 +46,7 @@ class Bitmap
 
         (y1..y2).each{|y| @image[y-1][x-1] = colour}
       else
-        message("X should be between 1 and #{@width}, Y1/Y2 should be between 1 and #{@height} or enter '?' for help")
+        message("X should be between 1 and #{@width}, Y1/Y2 should be between 1 and #{@height} also Y1 <= Y2, or enter '?' for help")
       end
     else
       msg_empty_image
@@ -56,7 +63,7 @@ class Bitmap
 
         (x1..x2).each{|x| @image[y-1][x-1] = colour}
       else
-        message("X1/X2 should be between 1 and #{@width}, Y should be between 1 and #{@height} or enter '?' for help")
+        message("X1/X2 should be between 1 and #{@width} also X1 <= X2, Y should be between 1 and #{@height} or enter '?' for help")
       end
     else
       msg_empty_image
