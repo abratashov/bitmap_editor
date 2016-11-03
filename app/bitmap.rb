@@ -63,8 +63,8 @@ class Bitmap
     end
   end
 
-  def show
-    @image.each{|row| puts row} if @image
+  def image
+    @image
   end
 
   private

@@ -4,7 +4,7 @@ class BitmapEditor
 
   def run
     @running = true
-    bitmap = Bitmap.new
+    @bitmap = Bitmap.new
     puts 'type ? for help'
     while @running
       print '> '
@@ -14,17 +14,17 @@ class BitmapEditor
         when '?'
           show_help
         when /\s*I\s+\d+\s+\d+\s*\z/
-          @message = bitmap.init_new_image(input)
+          @message = @bitmap.init_new_image(input)
         when /\s*C\s*\z/
-          @message = bitmap.clean_image
+          @message = @bitmap.clean_image
         when /\s*L\s+\d+\s+\d+\s+[A-Z]\s*\z/
-          @message = bitmap.draw_pixel(input)
+          @message = @bitmap.draw_pixel(input)
         when /\s*V\s+\d+\s+\d+\s+\d+\s+[A-Z]\s*\z/
-          @message = bitmap.draw_vertical_line(input)
+          @message = @bitmap.draw_vertical_line(input)
         when /\s*H\s+\d+\s+\d+\s+\d+\s+[A-Z]\s*\z/
-          @message = bitmap.draw_horizontal_line(input)
+          @message = @bitmap.draw_horizontal_line(input)
         when /\s*S\s*\z/
-          @message = bitmap.show
+          show
         when /\s*X\s*\z/
           exit_console
         else
@@ -35,6 +35,11 @@ class BitmapEditor
   end
 
   private
+
+    def show
+      @bitmap.image.each{|row| puts row} if @bitmap.image
+    end
+
     def exit_console
       puts 'goodbye!'
       @running = false
