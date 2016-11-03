@@ -17,6 +17,8 @@ class BitmapEditor
           draw_pixel(input)
         when /\s*V\s+\d+\s+\d+\s+\d+\s+[A-Z]\s*\z/
           draw_vertical_line(input)
+        when /\s*H\s+\d+\s+\d+\s+\d+\s+[A-Z]\s*\z/
+          draw_horizontal_line(input)
         when /\s*S\s*\z/
           show
         when /\s*X\s*\z/
@@ -69,6 +71,23 @@ class BitmapEditor
           (y1..y2).each{|y| @image[y-1][x-1] = colour}
         else
           puts "X should be between 1 and #{@width}, Y1/Y2 should be between 1 and #{@height} or enter '?' for help"
+        end
+      else
+        msg_empty_image
+      end
+    end
+
+    def draw_horizontal_line(input)
+      if @image
+        params = input.split(' ')
+        x1, x2, y, colour = params[1].to_i, params[2].to_i, params[3].to_i, params[4]
+        if x1.between?(1, @width) && x2.between?(1, @width) &&
+           x1 <= x2 &&
+           y.between?(1, @height)
+
+          (x1..x2).each{|x| @image[y-1][x-1] = colour}
+        else
+          puts "X1/X2 should be between 1 and #{@width}, Y should be between 1 and #{@height} or enter '?' for help"
         end
       else
         msg_empty_image
