@@ -9,15 +9,30 @@ class BitmapEditor
       case input
         when '?'
           show_help
-        when 'X'
+        when /\s*I\s+\d+\s+\d+\s*\z/
+          init_new_image(input)
+        when /\s*S\s*\z/
+          show
+        when /\s*X\s*\z/
           exit_console
         else
-          puts 'unrecognised command :('
+          puts "unrecognised command :( please enter '?' for help"
       end
     end
   end
 
   private
+    def init_new_image(input)
+      params = input.split(' ')
+      @width, @height = params[1].to_i, params[2].to_i
+      @image = []
+      @height.times.each {|time| @image << 'O'*@width}
+    end
+
+    def show
+      @image.each{|row| puts row} if @image
+    end
+
     def exit_console
       puts 'goodbye!'
       @running = false
